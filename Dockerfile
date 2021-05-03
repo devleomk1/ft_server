@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 22:15:41 by jisokang          #+#    #+#              #
-#    Updated: 2021/04/28 22:31:14 by jisokang         ###   ########.fr        #
+#    Updated: 2021/05/03 22:17:52 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,19 @@ LABEL	maintainer="jisokang <jisokang@student.42seoul.kr>"
 # https://nirsa.tistory.com/70
 # maintainer = Docker image를 생성한 사람/기관
 
-RUN
+RUN		apt-get update && apt-get -y upgrade && apt-get -y install \
+		nginx \
+		vim \
+		openssl \
+		php7.3-fpm \
+		mariadb-server \
+		php-mysql \
+		wget
 
-COPY
+COPY	./src/run.sh ./
+
+# COPY [src] [dst]
+# src를 dst로 복사
 
 EXPOSE	80 443
 # 이 컨테이너가 해당 포트를 사용할 예정임을 사용자에게 알려준다.
