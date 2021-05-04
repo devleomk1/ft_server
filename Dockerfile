@@ -6,12 +6,12 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 22:15:41 by jisokang          #+#    #+#              #
-#    Updated: 2021/05/03 22:17:52 by jisokang         ###   ########.fr        #
+#    Updated: 2021/05/04 21:37:31 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM	debian:buster
-# 프로젝트를 시작할 베이스 image 를 지정한다.
+# 프로젝트를 시작할 베이스 image를 지정한다.
 # 우리 과제에서는 `debian:buster`로 설정.
 
 LABEL	maintainer="jisokang <jisokang@student.42seoul.kr>"
@@ -29,7 +29,7 @@ RUN		apt-get update && apt-get -y upgrade && apt-get -y install \
 		wget
 
 COPY	./src/run.sh ./
-
+COPY	./src/ ./
 # COPY [src] [dst]
 # src를 dst로 복사
 
