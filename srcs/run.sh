@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 14:40:21 by jisokang          #+#    #+#              #
-#    Updated: 2021/05/05 15:45:49 by jisokang         ###   ########.fr        #
+#    Updated: 2021/05/06 22:39:02 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,21 +52,18 @@ tar -xvf phpMyAdmin-5.0.2-all-languages.tar.gz
 # https://recipes4dev.tistory.com/146
 mv phpMyAdmin-5.0.2-all-languages phpmyadmin
 mv phpmyadmin /var/www/html/
-
-cp -rp var/www/html/phpmyadmin/config.inc.php var/www/html/phpmyadmin/config.inc.php
+cp -rp /tmp/config.inc.php /var/www/html/phpmyadmin/
 
 service mysql start
 mysql < var/www/html/phpmyadmin/sql/create_tables.sql -u root --skip-password
-
 echo "CREATE DATABASE IF NOT EXISTS wordpress;" | mysql -u root --skip-password
-echo "CREATE USER IF NOT EXISTS 'root'@'localhost' IDENTIFIED BY '1234';" | mysql - u root --skip-password
-echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'root'@'localhost' WITH GRANT OPTION;" | mysql -u root --skip-password
-echo "FLUSH PRIVILEGES;" | mysql - u root --skip-password
-echo "SHOW DATABASES;" | mysql - u root --skip-password
+echo "GRANT ALL PRIVILEGES ON *.* TO 'jisokang'@'localhost' IDENTIFIED BY '1234' WITH GRANT OPTION" | mysql -u root --skip-password
+#echo "CREATE USER IF NOT EXISTS 'jisokang'@'localhost' IDENTIFIED BY '1234';" | mysql - u root --skip-password
+#echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'jisokang'@'localhost' WITH GRANT OPTION;" | mysql -u root --skip-password
 
 wget https://wordpress.org/latest.tar.gz
 tar -xvf latest.tar.gz
-mv wordpress/ var/www/html/
+mv wordpress/ /var/www/html/
 chown -R www-data:www-data /var/www/html/wordpress
 # chown [-R] [user][:group] target
 # 파일 소유권 변경(change owner)
