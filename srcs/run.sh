@@ -6,14 +6,14 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 14:40:21 by jisokang          #+#    #+#              #
-#    Updated: 2021/05/04 20:46:09 by jisokang         ###   ########.fr        #
+#    Updated: 2021/05/05 15:45:49 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #!/bin/bash
 # '#!'는 스크립트를 실행할 쉘을 지정하는 선언문이다.(주석 아님) /bin/bash로 실행하라는 뜻.
 
-openssl req -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=KR/ST=Seoul/L=Seoul/O=42Seoul/OU=Cluster/CN=localhost" -keyout localhost.dev.key -out localhost.dev.crt
+openssl req -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=KR/ST=Seoul/L=Seoul/O=42Seoul/OU=Gon/CN=localhost" -keyout localhost.dev.key -out localhost.dev.crt
 # openssl은 Nginx등과 같은 웹서버에 HTTPS를 적용하기 위한 테스트용 SSL 인증서를 생성할 때 사용하는 프로그램이다.
 # 	* rsa:4096  : SSL/TLS에 가장 많이 사용하는 공개키 알고리즘. 뒤의 숫자는 키 비트수
 # 	* -days 365 : 인증서 유효기간
@@ -58,13 +58,11 @@ cp -rp var/www/html/phpmyadmin/config.inc.php var/www/html/phpmyadmin/config.inc
 service mysql start
 mysql < var/www/html/phpmyadmin/sql/create_tables.sql -u root --skip-password
 
-#sql 파일 하나 만들어? 복붙
-#???????????????????????
 echo "CREATE DATABASE IF NOT EXISTS wordpress;" | mysql -u root --skip-password
-echo "GRANT ALL PRIVILEGES ON *.* TO 'jisokang'@'localhost' IDENTIFIED BY '1234';" | mysql - u root --skip-password
-echo "FLUSH PRIVILEGES;" |
-echo "SHOW DATABASES;"
-#???????????????????????
+echo "CREATE USER IF NOT EXISTS 'root'@'localhost' IDENTIFIED BY '1234';" | mysql - u root --skip-password
+echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'root'@'localhost' WITH GRANT OPTION;" | mysql -u root --skip-password
+echo "FLUSH PRIVILEGES;" | mysql - u root --skip-password
+echo "SHOW DATABASES;" | mysql - u root --skip-password
 
 wget https://wordpress.org/latest.tar.gz
 tar -xvf latest.tar.gz

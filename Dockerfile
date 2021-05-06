@@ -6,13 +6,13 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 22:15:41 by jisokang          #+#    #+#              #
-#    Updated: 2021/05/04 21:37:31 by jisokang         ###   ########.fr        #
+#    Updated: 2021/05/05 19:18:44 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM	debian:buster
 # 프로젝트를 시작할 베이스 image를 지정한다.
-# 우리 과제에서는 `debian:buster`로 설정.
+# ft_server 과제에서는 `debian:buster`로 설정.
 
 LABEL	maintainer="jisokang <jisokang@student.42seoul.kr>"
 # LABEL 명령은 이미지의 버전 정보, 작성자, 코멘트와 같이 이미지 상세 정보를 작성해두기 위한 명령 입니다.
@@ -28,8 +28,10 @@ RUN		apt-get update && apt-get -y upgrade && apt-get -y install \
 		php-mysql \
 		wget
 
-COPY	./src/run.sh ./
-COPY	./src/ ./
+COPY	./srcs/run.sh ./
+COPY	./srcs/config.inc.php ./tmp
+COPY	./srcs/default ./tmp
+COPY	./srcs/wp-config.php ./tmp
 # COPY [src] [dst]
 # src를 dst로 복사
 
