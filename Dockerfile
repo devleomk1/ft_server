@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 22:15:41 by jisokang          #+#    #+#              #
-#    Updated: 2021/05/06 21:02:59 by jisokang         ###   ########.fr        #
+#    Updated: 2021/05/07 23:09:40 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ RUN		apt-get update && apt-get -y upgrade && apt-get -y install \
 		mariadb-server \
 		php-mysql \
 		wget
+		#mariaDB랑 mysql이랑 차이는 무엇이고, 왜 둘다 필요한가 두가지 레이어를 가지는가?
 
 COPY	./srcs/run.sh ./
 COPY	./srcs/config.inc.php ./tmp
@@ -41,3 +42,4 @@ EXPOSE	80 443
 
 CMD		bash run.sh
 # 생성된 컨테이너를 실행할 명령어를 지정한다.
+#JS : docker run -> 자동으로 run.sh를 실행하기 위해 CMD

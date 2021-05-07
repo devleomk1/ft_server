@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 14:40:21 by jisokang          #+#    #+#              #
-#    Updated: 2021/05/06 22:39:02 by jisokang         ###   ########.fr        #
+#    Updated: 2021/05/07 22:54:04 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ openssl req -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=KR/ST=Seoul/L=Seou
 # 	* -nodes	: no des 개인키를 비밀번호로 보호하고 싶지 않을 때, 이 옵션을 생략하면 매번 비밀번호를 입력해야함.
 # 	* -x509		: 이 옵션을 사용하면 인증서명요청 대신 Self Signed 인증서를 생성한다.
 # 	* -subj ""	: 인증서 안에 들어갈 정보를 명시.
-# 	* -keyout [개인키 이름]
-# 	* -out [인증서 이름]
+# 	* -keyout (~.key) : [개인키 이름]
+# 	* -out (~.crt)	  : [인증서 이름]
 
 # 전자서명인증관리체계 DN(고유 이름) 규격
 # 	* CN(Common name)		: 가입자의 이름
@@ -56,10 +56,22 @@ cp -rp /tmp/config.inc.php /var/www/html/phpmyadmin/
 
 service mysql start
 mysql < var/www/html/phpmyadmin/sql/create_tables.sql -u root --skip-password
+#@youngrch : 이거 지워도 되는거아님?
+#''가 복사하면 다른 문자로 들어가니 주의!
 echo "CREATE DATABASE IF NOT EXISTS wordpress;" | mysql -u root --skip-password
 echo "GRANT ALL PRIVILEGES ON *.* TO 'jisokang'@'localhost' IDENTIFIED BY '1234' WITH GRANT OPTION" | mysql -u root --skip-password
-#echo "CREATE USER IF NOT EXISTS 'jisokang'@'localhost' IDENTIFIED BY '1234';" | mysql - u root --skip-password
-#echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'jisokang'@'localhost' WITH GRANT OPTION;" | mysql -u root --skip-password
+# MySQL 명령어
+# DB에 사용자 및 권한 추가
+# GRANT(수여하다)
+# PRIVILEGES (특권)
+# GRANT [권한종류] ON [대상DB] TO [계정명] IDENTIFIED BY [DB암호] [WITH GRANT OPTION];
+# https://extbrain.tistory.com/44
+# --------------------------------------------
+# "FLUSH PRIVILEGES"를 하지 않아도 되는 이유!
+# 위 명령어는 Grant 테이블을 reload함으로 변경사항을 바로 적용하는 명령어인데,
+# INSERT, UPDATE와 같은 SQL문이 아닌 grant 명령어를 사용해서 사용자를 추가하거나 권한등을 변경하였다면 굳이 실행할 필요가 없습니다.
+# http://www.webmadang.net/database/database.do?action=read&boardid=4003&page=1&seq=23
+
 
 wget https://wordpress.org/latest.tar.gz
 tar -xvf latest.tar.gz
@@ -75,8 +87,3 @@ service php7.3-fpm start
 service mysql restart
 
 bash
-#그래야 백그라운드로 돌아감
-
-# nginx
-# v1.14 그냥 이걸로 하세용
-# v1.19 경로가 다름 조심쓰
