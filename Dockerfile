@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 22:15:41 by jisokang          #+#    #+#              #
-#    Updated: 2021/05/07 23:09:40 by jisokang         ###   ########.fr        #
+#    Updated: 2021/05/08 16:47:04 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,16 @@ LABEL	maintainer="jisokang <jisokang@student.42seoul.kr>"
 
 RUN		apt-get update && apt-get -y upgrade && apt-get -y install \
 		nginx \
+		#Web Server
+		php7.3-fpm \
+		#PHP
+		mariadb-server \
+		#Database
+		php-mysql \
+		#PHP와 DB를 연결해주는 패키지
 		vim \
 		openssl \
-		php7.3-fpm \
-		mariadb-server \
-		php-mysql \
 		wget
-		#mariaDB랑 mysql이랑 차이는 무엇이고, 왜 둘다 필요한가 두가지 레이어를 가지는가?
 
 COPY	./srcs/run.sh ./
 COPY	./srcs/config.inc.php ./tmp

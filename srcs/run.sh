@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 14:40:21 by jisokang          #+#    #+#              #
-#    Updated: 2021/05/07 22:54:04 by jisokang         ###   ########.fr        #
+#    Updated: 2021/05/08 16:46:55 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,8 +55,10 @@ mv phpmyadmin /var/www/html/
 cp -rp /tmp/config.inc.php /var/www/html/phpmyadmin/
 
 service mysql start
+# mariaDB와 MySQL의 차이
+# MariaDB의 실행 프로그램들과 유틸리티는 모두 MySQL과 이름이 동일하며, 호환된다.
+# https://sir.kr/cm_free/1489073
 mysql < var/www/html/phpmyadmin/sql/create_tables.sql -u root --skip-password
-#@youngrch : 이거 지워도 되는거아님?
 #''가 복사하면 다른 문자로 들어가니 주의!
 echo "CREATE DATABASE IF NOT EXISTS wordpress;" | mysql -u root --skip-password
 echo "GRANT ALL PRIVILEGES ON *.* TO 'jisokang'@'localhost' IDENTIFIED BY '1234' WITH GRANT OPTION" | mysql -u root --skip-password
